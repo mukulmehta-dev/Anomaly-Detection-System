@@ -32,7 +32,8 @@ def load_data():
 
 @app.post("/detect", response_model=AnomalyResponse)
 @limiter.limit("5/minute")
-def detect(tx: Transaction):
+def detect(request: Request, tx: Transaction):
+
 
     df = load_data().copy()
     df = pd.concat([df, pd.DataFrame([tx.dict()])], ignore_index=True)
